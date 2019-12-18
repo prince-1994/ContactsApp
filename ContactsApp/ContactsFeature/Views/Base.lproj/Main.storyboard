@@ -178,16 +178,89 @@
                     <view key="view" contentMode="scaleToFill" id="Gdw-U4-Cau">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mfB-un-Vb9">
+                                <rect key="frame" x="0.0" y="44" width="414" height="250"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder_photo" translatesAutoresizingMaskIntoConstraints="NO" id="bMq-t8-Gpa">
+                                        <rect key="frame" x="132" y="50" width="150" height="150"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="150" id="7XG-s0-axt"/>
+                                            <constraint firstAttribute="width" constant="150" id="KaB-O6-51q"/>
+                                        </constraints>
+                                    </imageView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="camera_button" translatesAutoresizingMaskIntoConstraints="NO" id="0An-hh-5XA">
+                                        <rect key="frame" x="252" y="170" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="gw4-EN-mT9"/>
+                                            <constraint firstAttribute="width" constant="30" id="inS-u7-630"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstItem="bMq-t8-Gpa" firstAttribute="top" secondItem="mfB-un-Vb9" secondAttribute="top" constant="50" id="YTG-kg-FPh"/>
+                                    <constraint firstItem="0An-hh-5XA" firstAttribute="bottom" secondItem="bMq-t8-Gpa" secondAttribute="bottom" id="lUK-K7-isg"/>
+                                    <constraint firstItem="bMq-t8-Gpa" firstAttribute="centerX" secondItem="mfB-un-Vb9" secondAttribute="centerX" id="ok8-0X-x5D"/>
+                                    <constraint firstItem="bMq-t8-Gpa" firstAttribute="centerY" secondItem="mfB-un-Vb9" secondAttribute="centerY" id="qyO-l7-lw9"/>
+                                    <constraint firstItem="0An-hh-5XA" firstAttribute="trailing" secondItem="bMq-t8-Gpa" secondAttribute="trailing" id="yiZ-wz-QFX"/>
+                                </constraints>
+                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Fhk-qL-GEx">
+                                <rect key="frame" x="0.0" y="294" width="414" height="512"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E11-i7-m1a" customClass="ContactInfoTextField" customModule="ContactsApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="128"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iPN-zj-Ytz" customClass="ContactInfoTextField" customModule="ContactsApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="128" width="414" height="128"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rcn-95-ARg" customClass="ContactInfoTextField" customModule="ContactsApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="256" width="414" height="128"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TZE-mi-akO" customClass="ContactInfoTextField" customModule="ContactsApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="384" width="414" height="128"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" priority="1" id="NqE-Ll-nvb"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.90980392156862744" green="0.90980392156862744" blue="0.90980392156862744" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="dW7-Vr-1NB" firstAttribute="trailing" secondItem="mfB-un-Vb9" secondAttribute="trailing" id="2PA-go-uOG"/>
+                            <constraint firstItem="mfB-un-Vb9" firstAttribute="top" secondItem="dW7-Vr-1NB" secondAttribute="top" id="9Wh-4D-nWS"/>
+                            <constraint firstItem="Fhk-qL-GEx" firstAttribute="top" secondItem="mfB-un-Vb9" secondAttribute="bottom" id="BBz-gs-Yzx"/>
+                            <constraint firstItem="Fhk-qL-GEx" firstAttribute="leading" secondItem="dW7-Vr-1NB" secondAttribute="leading" id="O8k-KF-bUx"/>
+                            <constraint firstItem="mfB-un-Vb9" firstAttribute="leading" secondItem="dW7-Vr-1NB" secondAttribute="leading" id="egj-ka-cTM"/>
+                            <constraint firstItem="dW7-Vr-1NB" firstAttribute="trailing" secondItem="Fhk-qL-GEx" secondAttribute="trailing" id="hGf-ZB-RVl"/>
+                            <constraint firstItem="dW7-Vr-1NB" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Fhk-qL-GEx" secondAttribute="bottom" id="jBV-Em-fAB"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="dW7-Vr-1NB"/>
                     </view>
+                    <connections>
+                        <outlet property="emailTextField" destination="TZE-mi-akO" id="sIJ-Ox-S5E"/>
+                        <outlet property="firstNameTextField" destination="E11-i7-m1a" id="ABu-7x-eeR"/>
+                        <outlet property="lastNameTextField" destination="iPN-zj-Ytz" id="JhF-0j-VDO"/>
+                        <outlet property="mobileTextField" destination="rcn-95-ARg" id="MQE-J5-J8w"/>
+                        <outlet property="profilePicImageView" destination="bMq-t8-Gpa" id="S6h-c3-4ea"/>
+                        <outlet property="stackview" destination="Fhk-qL-GEx" id="QEQ-63-Pbh"/>
+                        <outlet property="topView" destination="mfB-un-Vb9" id="nGm-Mp-fvQ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2mP-cg-efc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1587" y="41"/>
+            <point key="canvasLocation" x="1586.9565217391305" y="40.848214285714285"/>
         </scene>
     </scenes>
     <resources>
+        <image name="camera_button" width="41" height="41"/>
         <image name="home_favourite" width="19" height="18"/>
         <image name="placeholder_photo" width="126" height="126"/>
     </resources>

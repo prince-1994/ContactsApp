@@ -36,3 +36,45 @@ extension UIColor {
     }
 }
 
+extension UIView {
+    /** Loads instance from nib with the same name. */
+    func loadNib() -> UIView {
+        let bundle = Bundle(for: type(of: self))
+        let nibName = type(of: self).description().components(separatedBy: ".").last!
+        let nib = UINib(nibName: nibName, bundle: bundle)
+        return nib.instantiate(withOwner: self, options: nil).first as! UIView
+    }
+    
+    @discardableResult
+    func applyGradient(colours: [UIColor]) -> CAGradientLayer {
+        return self.applyGradient(colours: colours, locations: nil)
+    }
+
+    @discardableResult
+    func applyGradient(colours: [UIColor], locations: [NSNumber]?) -> CAGradientLayer {
+        let gradient: CAGradientLayer = CAGradientLayer()
+        gradient.frame = self.bounds
+        gradient.colors = colours.map { $0.cgColor }
+        gradient.locations = locations
+        self.layer.insertSublayer(gradient, at: 0)
+        return gradient
+    }
+}
+
+
+extension UIImageView {
+    func setImageURL(string : String?, placeholder : UIImage?) {
+        self.image = placeholder
+        if let urlString = string {
+            ImageDownloader.downloadImage(urlString: urlString) { [weak self] (result) in
+                switch result {
+                case .success(let newImage):
+                    self?.image = newImage
+                case .failure(_):
+                    break
+                }
+            }
+        }
+    }
+}
+

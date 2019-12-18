@@ -33,7 +33,7 @@ class ContactsProvider {
         return contacts
     }
     
-    func addNewContact(contact : Contact) {
+    func addNewContact(contact : Contact, onCompletion: ((Result<Contact,AppError>) -> Void)?) {
         networkAPIHandler.createContact(with: contact) { [weak self] (result) in
             switch result {
             case .success(let contact):
@@ -43,10 +43,11 @@ class ContactsProvider {
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: NEW_CONTACT_CREATION_FAILED), object: self)
                 break
             }
+            onCompletion?(result)
         }
     }
     
-    func updateContact(for id : Int, contact : Contact) {
+    func updateContact(for id : Int, contact : Contact, onCompletion: ((Result<Contact,AppError>) -> Void)?) {
         networkAPIHandler.updateContact(for: id, with: contact) { [weak self] (result) in
             switch result {
             case .success(let contact):
@@ -58,6 +59,7 @@ class ContactsProvider {
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: CONTACT_UPDATE_FAILED), object: self)
                 break
             }
+            onCompletion?(result)
         }
     }
     

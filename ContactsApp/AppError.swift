@@ -12,3 +12,5 @@ enum AppError : Error {
     case miscellaneous(message : String)
     case unknown(message : String)
 }
+
+

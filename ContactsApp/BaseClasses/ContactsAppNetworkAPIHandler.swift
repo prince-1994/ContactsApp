@@ -62,6 +62,7 @@ class ContactsAppNetworkAPIHandler {
                 let model = try JSONDecoder().decode(T.self, from: data)
                 return .success(model)
             } catch {
+                print((try? JSONSerialization.jsonObject(with: data, options: .mutableLeaves)) as? Dictionary<AnyHashable, Any> as Any)
                 return .failure(.parsingError(message: "Not able to parse data"))
             }
         } else if let response = response {

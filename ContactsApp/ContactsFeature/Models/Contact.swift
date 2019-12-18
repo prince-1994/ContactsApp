@@ -14,5 +14,5 @@ struct Contact : Codable, Hashable {
     var email : String?
     var profile_pic : String?
     var favorite : Bool
-    var url : String
+    var url : String?
 }

@@ -77,6 +77,13 @@ class ContactVC: ContactAppBaseViewController, UITableViewDelegate, UITableViewD
     
     // MARK: tableview delegate methods
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyBoard.instantiateViewController(identifier: "ContactDetailsVC") as! ContactDetailsVC
+        
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     // MARK: helper methods
     
     @objc func updateContacts() {
@@ -109,8 +116,7 @@ class ContactVC: ContactAppBaseViewController, UITableViewDelegate, UITableViewD
     @objc func openContactEditView() {
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyBoard.instantiateViewController(identifier: "ContactEditVC") as! ContactEditVC
-        vc.contact = Contact(id: nil, first_name: "", last_name: "", phone_number: nil, email: nil, profile_pic: nil, favorite: false, url: "")
-        vc.contactsProvider = contactsProvider
+        vc.set(contact: Contact(id: nil, first_name: "", last_name: "", phone_number: nil, email: nil, profile_pic: nil, favorite: false, url: ""))
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

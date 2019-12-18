@@ -8,14 +8,30 @@
 
 import UIKit
 
-class ContactInfoTextField: UIView {
+class ContactInfoTextField: NibView {
 
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var valueTextField: UITextField!
+    
+    var text : String? {
+        get {
+            self.valueTextField.text
+        }
+        set {
+            self.valueTextField.text = newValue
+        }
     }
-    */
-
+    
+    required init?(coder: NSCoder) {
+        super.init(coder : coder)
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
+    func setValues(name : String, value : String) {
+        self.nameLabel.text = name
+        self.valueTextField.text = value
+    }
 }
