@@ -15,7 +15,7 @@ class ContactNetworkAPIHandler : ContactsAppNetworkAPIHandler {
     let baseURL = "https://gojek-contacts-app.herokuapp.com"
     
     
-    func getAllContacts(onCompletion : @escaping ((Result<[Contact],ContactsAppError>) -> Void)) {
+    func getAllContacts(onCompletion : @escaping ((Result<[Contact],AppError>) -> Void)) {
         let urlString : String = baseURL + contactsEndpoint + dotJson
         guard let url = URL(string: urlString) else { return }
         var request = URLRequest(url: url)
@@ -24,7 +24,7 @@ class ContactNetworkAPIHandler : ContactsAppNetworkAPIHandler {
             
     }
     
-    func getContact(for id: Int, onCompletion : @escaping ((Result<Contact,ContactsAppError>) -> Void)) {
+    func getContact(for id: Int, onCompletion : @escaping ((Result<Contact,AppError>) -> Void)) {
         let urlString : String = baseURL + contactsEndpoint + "/\(id)" + dotJson
         guard let url = URL(string: urlString) else { return }
         var request = URLRequest(url: url)
@@ -32,7 +32,7 @@ class ContactNetworkAPIHandler : ContactsAppNetworkAPIHandler {
         makeAPICall(with: request, onCompletion: onCompletion)
     }
     
-    func createContact(with data : Data , onCompletion : @escaping ((Result<Contact,ContactsAppError>) -> Void)) {
+    func createContact(with data : Data , onCompletion : @escaping ((Result<Contact,AppError>) -> Void)) {
         let urlString : String = baseURL + contactsEndpoint + dotJson
         guard let url = URL(string: urlString) else { return }
         var request = URLRequest(url: url)
@@ -43,7 +43,7 @@ class ContactNetworkAPIHandler : ContactsAppNetworkAPIHandler {
         makeAPICall(with: request, onCompletion: onCompletion)
     }
     
-    func updateContact(with data : Data, for id : Int, onCompletion : @escaping ((Result<Contact,ContactsAppError>) -> Void)) {
+    func updateContact(with data : Data, for id : Int, onCompletion : @escaping ((Result<Contact,AppError>) -> Void)) {
         let urlString : String = baseURL + contactsEndpoint + "/\(id)" +  dotJson
         guard let url = URL(string: urlString) else { return }
         var request = URLRequest(url: url)

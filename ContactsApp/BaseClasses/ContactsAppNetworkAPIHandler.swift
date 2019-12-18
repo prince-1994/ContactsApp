@@ -48,30 +48,30 @@ class ContactsAppNetworkAPIHandler {
             if let data = data {
                 do {
                     let error = try JSONDecoder().decode(ContactAppNetworkError.self, from: data)
-                    return .failure(AppError.networkError(code: error.code, message: error.message))
+                    return .failure(.networkError(code: error.code, message: error.message))
                 } catch {
-                    return .failure(AppError.parsingError(message: "Failed to parse error object"))
+                    return .failure(.parsingError(message: "Failed to parse error object"))
                 }
             } else if let response = response as? HTTPURLResponse {
-                return .failure(AppError.networkError(code: response.statusCode, message: error.localizedDescription))
+                return .failure(.networkError(code: response.statusCode, message: error.localizedDescription))
             } else {
-                return .failure(AppError.miscellaneous(message: "not a http response"))
+                return .failure(.miscellaneous(message: "not a http response"))
             }
         } else if let data = data {
             do {
                 let model = try JSONDecoder().decode(T.self, from: data)
                 return .success(model)
             } catch {
-                return .failure(AppError.parsingError(message: "Not able to parse data"))
+                return .failure(.parsingError(message: "Not able to parse data"))
             }
         } else if let response = response {
             if let httpResponse = response as? HTTPURLResponse {
-                return .failure(AppError.networkError(code: httpResponse.statusCode, message: "Data not received"))
+                return .failure(.networkError(code: httpResponse.statusCode, message: "Data not received"))
             } else {
-                return .failure(AppError.miscellaneous(message: "not a http response"))
+                return .failure(.miscellaneous(message: "not a http response"))
             }
         } else {
-            return .failure(AppError.unknown(message: "no response, no data, no error recieved"))
+            return .failure(.unknown(message: "no response, no data, no error recieved"))
         }
     }
     
