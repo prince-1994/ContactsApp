@@ -10,16 +10,16 @@ import UIKit
 
 class ImageDownloader {
     
-    func downloadImage(urlString : String , onCompletion : @escaping (Result<UIImage,AppError>) -> Void) {
+    static func downloadImage(urlString : String , onCompletion : @escaping (Result<UIImage,AppError>) -> Void) {
         guard let url = URL(string : urlString) else { return }
-        URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
-            guard let result = self?.parseResponse(data : data, response : response, error : error) else { return }
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            let result = parseResponse(data : data, response : response, error : error)
             onCompletion(result)
         }.resume()
         
     }
     
-    func parseResponse(data : Data?, response :  URLResponse?, error : Error?) -> Result<UIImage,AppError> {
+    static func parseResponse(data : Data?, response :  URLResponse?, error : Error?) -> Result<UIImage,AppError> {
         if let error = error {
             if let response = response as? HTTPURLResponse {
                 return .failure(.networkError(code: response.statusCode, message: error.localizedDescription))

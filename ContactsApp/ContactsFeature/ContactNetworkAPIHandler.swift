@@ -32,7 +32,8 @@ class ContactNetworkAPIHandler : ContactsAppNetworkAPIHandler {
         makeAPICall(with: request, onCompletion: onCompletion)
     }
     
-    func createContact(with data : Data , onCompletion : @escaping ((Result<Contact,AppError>) -> Void)) {
+    func createContact(with contact : Contact , onCompletion : @escaping ((Result<Contact,AppError>) -> Void)) {
+        guard let data = try? JSONEncoder().encode(contact) else { return }
         let urlString : String = baseURL + contactsEndpoint + dotJson
         guard let url = URL(string: urlString) else { return }
         var request = URLRequest(url: url)
@@ -43,7 +44,8 @@ class ContactNetworkAPIHandler : ContactsAppNetworkAPIHandler {
         makeAPICall(with: request, onCompletion: onCompletion)
     }
     
-    func updateContact(with data : Data, for id : Int, onCompletion : @escaping ((Result<Contact,AppError>) -> Void)) {
+    func updateContact(for id : Int, with contact : Contact, onCompletion : @escaping ((Result<Contact,AppError>) -> Void)) {
+        guard let data = try? JSONEncoder().encode(contact) else { return }
         let urlString : String = baseURL + contactsEndpoint + "/\(id)" +  dotJson
         guard let url = URL(string: urlString) else { return }
         var request = URLRequest(url: url)

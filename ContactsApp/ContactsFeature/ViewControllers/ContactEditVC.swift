@@ -9,11 +9,19 @@
 import UIKit
 
 class ContactEditVC: UIViewController {
-
+    
+    var contact : Contact!
+    var contactsProvider = ContactsProvider.shared
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
+        
+    }
+    
+    func configureNavigationBar() {
+        self.title = ""
+        
     }
 
 }
