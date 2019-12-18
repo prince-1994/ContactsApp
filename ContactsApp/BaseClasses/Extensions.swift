@@ -69,12 +69,20 @@ extension UIImageView {
             ImageDownloader.downloadImage(urlString: urlString) { [weak self] (result) in
                 switch result {
                 case .success(let newImage):
-                    self?.image = newImage
+                    DispatchQueue.main.async {
+                        self?.image = newImage
+                    }
                 case .failure(_):
                     break
                 }
             }
         }
+    }
+}
+
+extension Encodable {
+    var dictionary: [String: Any] {
+        return (try? JSONSerialization.jsonObject(with: JSONEncoder().encode(self))) as? [String: Any] ?? [:]
     }
 }
 

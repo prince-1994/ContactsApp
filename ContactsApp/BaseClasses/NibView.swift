@@ -21,8 +21,6 @@ class NibView: UIView {
         // Setup view from .xib file
         xibSetup()
     }
-}
-private extension NibView {
     
     func xibSetup() {
         backgroundColor = UIColor.clear
@@ -42,4 +40,8 @@ private extension NibView {
                                                       metrics: nil,
                                                       views: ["childView": view!]))
     }
+}
+private extension NibView {
+    
+    
 }

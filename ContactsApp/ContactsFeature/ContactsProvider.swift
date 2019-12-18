@@ -33,14 +33,20 @@ class ContactsProvider {
         return contacts
     }
     
+    func getContact(for id : Int, onCompletion : ((Result<Contact,AppError>) -> Void)?) {
+        networkAPIHandler.getContact(for: id) { [weak self] (result) in
+            onCompletion?(result)
+        }
+    }
+    
     func addNewContact(contact : Contact, onCompletion: ((Result<Contact,AppError>) -> Void)?) {
         networkAPIHandler.createContact(with: contact) { [weak self] (result) in
             switch result {
             case .success(let contact):
                 self?.contacts.append(contact)
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: NEW_CONTACT_CREATED), object: self)
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: NEW_CONTACT_CREATED), object: self, userInfo: contact.dictionary)
             case .failure(_) :
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: NEW_CONTACT_CREATION_FAILED), object: self)
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: NEW_CONTACT_CREATION_FAILED), object: self, userInfo: contact.dictionary)
                 break
             }
             onCompletion?(result)
@@ -54,9 +60,9 @@ class ContactsProvider {
                 if let index = self?.contacts.firstIndex(where : { $0.id == id }) {
                     self?.contacts[index] = contact
                 }
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: CONTACT_UPDATED_SUCCESSFULLY), object: self)
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: CONTACT_UPDATED_SUCCESSFULLY), object: self, userInfo: contact.dictionary)
             case .failure(_):
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: CONTACT_UPDATE_FAILED), object: self)
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: CONTACT_UPDATE_FAILED), object: self, userInfo: contact.dictionary)
                 break
             }
             onCompletion?(result)

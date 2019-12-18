@@ -57,6 +57,8 @@ class ContactEditVC: UIViewController, UITextFieldDelegate {
     
     // MARK: UITextField Delegate methods
     
+    
+    
     // MARK: Helper methods
     
     @objc func doneButtonTapped() {
@@ -122,10 +124,10 @@ class ContactEditVC: UIViewController, UITextFieldDelegate {
     }
     
     func setValuesForAllTextFields(contact : Contact) {
-        firstNameTextField.setValues(name: EDIT_TEXTFIELD_FIRST_NAME, value: contact.first_name)
-        lastNameTextField.setValues(name: EDIT_TEXTFIELD_LAST_NAME, value: contact.last_name)
-        mobileTextField.setValues(name: EDIT_TEXTFIELD_MOBILE, value: contact.phone_number ?? "")
-        emailTextField.setValues(name: EDIT_TEXTFIELD_EMAIL, value: contact.email ?? "")
+        firstNameTextField.setValues(name: EDIT_TEXTFIELD_FIRST_NAME, value: contact.first_name, isEditable : true)
+        lastNameTextField.setValues(name: EDIT_TEXTFIELD_LAST_NAME, value: contact.last_name, isEditable : true)
+        mobileTextField.setValues(name: EDIT_TEXTFIELD_MOBILE, value: contact.phone_number ?? "", isEditable : true)
+        emailTextField.setValues(name: EDIT_TEXTFIELD_EMAIL, value: contact.email ?? "", isEditable : true)
     }
 
 }

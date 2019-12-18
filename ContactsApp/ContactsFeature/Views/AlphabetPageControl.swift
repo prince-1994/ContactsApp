@@ -26,12 +26,13 @@ class AlphabetPageControl: UIStackView {
         for char in chars {
             let label = UILabel(frame: CGRect(x: 0, y: 0, width: 10, height: 20))
             label.text = String(char)
+            label.font = UIFont.systemFont(ofSize: 13)
             self.addArrangedSubview(label)
         }
     }
     
     private func getLabel(index : Int) -> UILabel? {
-        guard index < 0 || index >= self.arrangedSubviews.count else { return nil }
+        guard index >= 0 && index < self.arrangedSubviews.count else { return nil }
         guard let label = self.arrangedSubviews[index] as? UILabel else { return nil }
         return label
     }

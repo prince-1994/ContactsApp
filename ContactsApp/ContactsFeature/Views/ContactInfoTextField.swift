@@ -22,16 +22,9 @@ class ContactInfoTextField: NibView {
         }
     }
     
-    required init?(coder: NSCoder) {
-        super.init(coder : coder)
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-    
-    func setValues(name : String, value : String) {
+    func setValues(name : String, value : String, isEditable : Bool) {
         self.nameLabel.text = name
         self.valueTextField.text = value
+        self.valueTextField.isEnabled = isEditable
     }
 }
