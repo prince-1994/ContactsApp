@@ -28,16 +28,14 @@ class ContactDetailsVC: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        NotificationCenter.default.addObserver(self, selector: #selector(updateContactModel), name: NSNotification.Name(rawValue: CONTACT_UPDATED_SUCCESSFULLY), object: nil)
         configureNavigationBar()
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setValuesForAllTextViews(contact: contact)
-        setValuesForAllCTAButtons(contact: contact)
-        profilePicImageView.setImageURL(string: contact.profile_pic, placeholder: UIImage(named: PLACEHOLDER_PHOTO))
-        nameLabel.text = "\(contact.first_name) \(contact.last_name)"
+        self.updateAllDynamicUI()
         
     }
     
@@ -58,6 +56,15 @@ class ContactDetailsVC: UIViewController {
     }
     
     // MARK: Helper Methods
+    
+    @objc func updateContactModel(notification : Notification) {
+        guard let userInfo = notification.userInfo, let contact = try? JSONDecoder().decode(Contact.self, from: JSONSerialization.data(withJSONObject: userInfo, options: .prettyPrinted)) else { return }
+        self.contact = contact
+        DispatchQueue.main.async { [weak self] in
+            self?.updateAllDynamicUI()
+        }
+    }
+    
     func set(contact : Contact) {
         self.contact = contact
         guard let id = contact.id else { return }
@@ -66,9 +73,7 @@ class ContactDetailsVC: UIViewController {
             case .success(let contact):
                 self?.contact = contact
                 DispatchQueue.main.async {
-                    self?.setValuesForAllCTAButtons(contact: contact)
-                    self?.setValuesForAllTextViews(contact: contact)
-                    self?.profilePicImageView.setImageURL(string: contact.profile_pic, placeholder: UIImage(named: PLACEHOLDER_PHOTO))
+                    self?.updateAllDynamicUI()
                 }
             case .failure(let error):
                 print(error)
@@ -86,6 +91,13 @@ class ContactDetailsVC: UIViewController {
         callCTAButton.set(name: CALL_CTA_TEXT, image: UIImage(named: CALL_BUTTON_PHOTO)!)
         emailCTAButton.set(name: EMAIL_CTA_TEXT, image: UIImage(named: EMAIL_BUTTON_PHOTO)!)
         favoriteCTAButton.set(name: FAVORITE_CTA_TEXT, image: contact.favorite ? UIImage(named: FAVORITE_SELECTED_BUTTON_PHOTO)! : UIImage(named: FAVORITE_BUTTON_PHOTO)!)
+    }
+    
+    func updateAllDynamicUI() {
+        setValuesForAllTextViews(contact: contact)
+        setValuesForAllCTAButtons(contact: contact)
+        profilePicImageView.setImageURL(string: contact.profile_pic, placeholder: UIImage(named: PLACEHOLDER_PHOTO))
+        nameLabel.text = "\(contact.first_name) \(contact.last_name)"
     }
     
     @objc func editButtonTapped() {

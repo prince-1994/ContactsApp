@@ -107,6 +107,7 @@ class ContactVC: ContactAppBaseViewController, UITableViewDelegate, UITableViewD
                 }
             }
             guard let chars = self?.chars else { return }
+            self?.contactModels.removeAll()
             for char in chars {
                 self?.contactModels.append(dict[char]?.sorted(by: { (contact1, contact2) -> Bool in
                     contact1.first_name+contact1.last_name < contact2.first_name+contact2.last_name
