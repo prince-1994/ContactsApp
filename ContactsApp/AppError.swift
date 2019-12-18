@@ -6,7 +6,7 @@
 //  Copyright © 2019 Yuvraj Sahu Apps. All rights reserved.
 //
 
-enum ContactsAppError : Error {
+enum AppError : Error {
     case networkError(code : Int, message : String)
     case parsingError(message : String)
     case miscellaneous(message : String)
