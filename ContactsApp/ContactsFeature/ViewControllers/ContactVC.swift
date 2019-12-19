@@ -114,7 +114,7 @@ class ContactVC: ContactAppBaseViewController, UITableViewDelegate, UITableViewD
             guard let allContacts = self?.contactsProvider.getAllContacts() else { return }
             var dict = [Character : [Contact]]()
             for contact in allContacts {
-                if let firstChar = contact.first_name.first {
+                if let firstChar = contact.first_name.uppercased().first {
                     if dict[firstChar] == nil { dict[firstChar] = [Contact]() }
                     dict[firstChar]?.append(contact)
                 }
@@ -123,7 +123,7 @@ class ContactVC: ContactAppBaseViewController, UITableViewDelegate, UITableViewD
             self?.contactModels.removeAll()
             for char in chars {
                 self?.contactModels.append(dict[char]?.sorted(by: { (contact1, contact2) -> Bool in
-                    contact1.first_name+contact1.last_name < contact2.first_name+contact2.last_name
+                    (contact1.first_name+contact1.last_name).uppercased() < (contact2.first_name+contact2.last_name).uppercased()
                 }) ?? [Contact]())
             }
             DispatchQueue.main.async {
@@ -159,7 +159,7 @@ class ContactVC: ContactAppBaseViewController, UITableViewDelegate, UITableViewD
     }
     
     func insertNewContactIntoContactModels(contact : Contact) {
-        guard let firstChar = contact.first_name.first, let index = chars.firstIndex (where : { $0 == firstChar }) else { return }
+        guard let firstChar = contact.first_name.uppercased().first, let index = chars.firstIndex (where : { $0 == firstChar }) else { return }
         let insertionIndex = Utility.binarySearch(contactModels[index], contact) { (contact1, contact2) -> Int in
             let str1 = contact1.first_name + contact1.last_name
             let str2 = contact2.first_name + contact2.last_name
