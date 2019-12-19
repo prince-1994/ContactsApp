@@ -22,6 +22,15 @@ class ContactInfoTextField: NibView {
         }
     }
     
+    var keyBoardType : UIKeyboardType {
+        get {
+            self.valueTextField.keyboardType
+        }
+        set {
+            self.valueTextField.keyboardType = newValue
+        }
+    }
+    
     func setValues(name : String, value : String, isEditable : Bool) {
         self.nameLabel.text = name
         self.valueTextField.text = value

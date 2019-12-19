@@ -41,7 +41,3 @@ class NibView: UIView {
                                                       views: ["childView": view!]))
     }
 }
-private extension NibView {
-    
-    
-}

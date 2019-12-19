@@ -49,6 +49,8 @@ class ContactEditVC: UIViewController, UITextFieldDelegate {
         for textField in textFields {
             textField?.valueTextField.delegate = self
         }
+        mobileTextField.keyBoardType = .numberPad
+        emailTextField.keyBoardType = .emailAddress
     }
     
     func configureTopView() {

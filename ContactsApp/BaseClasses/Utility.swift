@@ -18,4 +18,12 @@ class Utility {
         }
         return end + 1
     }
+    
+    static func isValidPhoneNumber(string : String) -> Bool {
+        return true
+    }
+    
+    static func isValidEmail(string : String) -> Bool {
+        return true
+    }
 }

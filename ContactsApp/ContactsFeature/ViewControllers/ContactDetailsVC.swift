@@ -30,7 +30,7 @@ class ContactDetailsVC: UIViewController {
         // Do any additional setup after loading the view.
         NotificationCenter.default.addObserver(self, selector: #selector(updateContactModel), name: NSNotification.Name(rawValue: CONTACT_UPDATED_SUCCESSFULLY), object: nil)
         configureNavigationBar()
-        
+        configureCTAButtons()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -53,6 +53,45 @@ class ContactDetailsVC: UIViewController {
     
     func configureTopView() {
         topView.applyGradient(colours: [AppTheme.BASE_COLOR_2,AppTheme.BASE_COLOR_1], locations: [0.0,1.0])
+    }
+    
+    func configureCTAButtons() {
+        messageCTAButton.action = { [weak self] in
+            if let phoneNumer = self?.contact.phone_number {
+                do {
+                    try CommunicationHandler.shared.writeTextMessage(to: phoneNumer)
+                } catch {}
+            }
+        }
+        callCTAButton.action = { [weak self] in
+            if let phoneNumer = self?.contact.phone_number {
+                do {
+                    try CommunicationHandler.shared.makeAPhoneCall(to: phoneNumer)
+                } catch {}
+            }
+        }
+        emailCTAButton.action = { [weak self] in
+            if let phoneNumer = self?.contact.phone_number {
+                do {
+                    try CommunicationHandler.shared.writeAnEmail(to: phoneNumer)
+                } catch {}
+            }
+        }
+        favoriteCTAButton.action = { [weak self] in
+            self?.contact.favorite.toggle()
+            guard let contact = self?.contact, let id = contact.id else { return }
+            self?.contactsProvider.updateContact(for : id, contact : contact) { (result) in
+                switch result {
+                case .success(let contact):
+                    self?.contact = contact
+                    DispatchQueue.main.async {
+                        self?.setValuesForAllCTAButtons(contact: contact)
+                    }
+                case .failure(_):
+                    self?.contact.favorite.toggle()
+                }
+            }
+        }
     }
     
     // MARK: Helper Methods

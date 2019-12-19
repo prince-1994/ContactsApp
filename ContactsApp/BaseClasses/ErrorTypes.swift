@@ -13,4 +13,10 @@ enum AppError : Error {
     case unknown(message : String)
 }
 
+enum StringValidationError : Error {
+    case empty
+    case NotANumber
+    case NotAPhoneNumber
+}
+
 
