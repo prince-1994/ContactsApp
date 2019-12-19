@@ -21,16 +21,23 @@ class ContactVC: ContactAppBaseViewController, UITableViewDelegate, UITableViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        NotificationCenter.default.addObserver(self, selector: #selector(updateContacts), name: NSNotification.Name(rawValue: CONTACTS_LOADED_SUCCESSFULLY), object: nil)
-//        NotificationCenter.default.addObserver(self, selector: #selector(addNewContact(notification:)), name: NSNotification.Name(rawValue: NEW_CONTACT_CREATED), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(updateContacts), name: NSNotification.Name(rawValue: NEW_CONTACT_CREATED), object: nil)
-//        NotificationCenter.default.addObserver(self, selector: #selector(updateExistingContact(notification:)), name: NSNotification.Name(rawValue: CONTACT_UPDATED_SUCCESSFULLY), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(updateContacts), name: NSNotification.Name(rawValue: CONTACT_UPDATED_SUCCESSFULLY), object: nil)
+        
         // Do any additional setup after loading the view.
         configureTableView()
         configureAlphabetPageControl()
         configureNavigatioBar()
+        configureForNotifications()
         if (contactModels == [[]]) { updateContacts() }
+    }
+    
+    // MARK: Configuration methods
+    
+    func configureForNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateContacts), name: NSNotification.Name(rawValue: CONTACTS_LOADED_SUCCESSFULLY), object: nil)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(updateContacts), name: NSNotification.Name(rawValue: NEW_CONTACT_CREATED), object: nil)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(updateContacts), name: NSNotification.Name(rawValue: CONTACT_UPDATED_SUCCESSFULLY), object: nil)
     }
     
     func configureActivityIndicator() {
@@ -42,7 +49,9 @@ class ContactVC: ContactAppBaseViewController, UITableViewDelegate, UITableViewD
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.sectionHeaderHeight = UITableView.automaticDimension
+//        tableView.sectionHeaderHeight = 40 // UITableView.automaticDimension
+        tableView.sectionFooterHeight = CGFloat.leastNormalMagnitude
+
     }
     
     func configureAlphabetPageControl() {
@@ -76,6 +85,10 @@ class ContactVC: ContactAppBaseViewController, UITableViewDelegate, UITableViewD
         let view = tableView.dequeueReusableCell(withIdentifier: "ContactHeaderCell") as! ContactHeaderCell
         view.set(header: String(chars[section]))
         return view
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 40
     }
     
     // MARK: tableview delegate methods

@@ -78,8 +78,6 @@ class ContactEditVC: UIViewController, UITextFieldDelegate , UIImagePickerContro
         topView.applyGradient(colours: [AppTheme.BASE_COLOR_2,AppTheme.BASE_COLOR_1], locations: [0.0,1.0])
     }
     
-    // MARK: UITextField Delegate methods
-    
     // MARK: ImagePickerController delegate
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
