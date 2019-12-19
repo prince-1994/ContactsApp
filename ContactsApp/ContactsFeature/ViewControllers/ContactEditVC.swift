@@ -8,8 +8,9 @@
 
 import UIKit
 
-class ContactEditVC: UIViewController, UITextFieldDelegate {
+class ContactEditVC: UIViewController, UITextFieldDelegate , UIImagePickerControllerDelegate, UINavigationControllerDelegate  {
     
+    @IBOutlet weak var cameraPicImageView: UIImageView!
     @IBOutlet weak var profilePicImageView: UIImageView!
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var stackview: UIStackView!
@@ -20,6 +21,7 @@ class ContactEditVC: UIViewController, UITextFieldDelegate {
     
     private var contact : Contact!
     private var contactsProvider = ContactsProvider.shared
+    private var imagePicker = UIImagePickerController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +29,8 @@ class ContactEditVC: UIViewController, UITextFieldDelegate {
         configureAllTextField()
         configureNavigationBar()
         configureTopView()
+        configureProfilePicImageView()
+        configureCameraPicImageView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -35,7 +39,24 @@ class ContactEditVC: UIViewController, UITextFieldDelegate {
         profilePicImageView.setImageURL(string: contact.profile_pic, placeholder: UIImage(named: PLACEHOLDER_PHOTO))
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        profilePicImageView.layer.cornerRadius = profilePicImageView.frame.height/2.0
+    }
+    
     // MARK: View configuration methods
+    
+    func configureProfilePicImageView() {
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(openImagePickerController(sender:)))
+        profilePicImageView.addGestureRecognizer(tapRecognizer)
+        profilePicImageView.isUserInteractionEnabled = true
+    }
+    
+    func configureCameraPicImageView() {
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(openImagePickerController(sender:)))
+        cameraPicImageView.addGestureRecognizer(tapRecognizer)
+        cameraPicImageView.isUserInteractionEnabled = true
+    }
     
     func configureNavigationBar() {
         self.title = ""
@@ -59,7 +80,18 @@ class ContactEditVC: UIViewController, UITextFieldDelegate {
     
     // MARK: UITextField Delegate methods
     
+    // MARK: ImagePickerController delegate
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
     
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true, completion: nil)
+        if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            profilePicImageView.contentMode = .scaleAspectFill
+            profilePicImageView.image = pickedImage
+        }
+    }
     
     // MARK: Helper methods
     
@@ -130,6 +162,18 @@ class ContactEditVC: UIViewController, UITextFieldDelegate {
         lastNameTextField.setValues(name: EDIT_TEXTFIELD_LAST_NAME, value: contact.last_name, isEditable : true)
         mobileTextField.setValues(name: EDIT_TEXTFIELD_MOBILE, value: contact.phone_number ?? "", isEditable : true)
         emailTextField.setValues(name: EDIT_TEXTFIELD_EMAIL, value: contact.email ?? "", isEditable : true)
+    }
+    
+    @objc func openImagePickerController(sender: UITapGestureRecognizer) {
+        if (UIImagePickerController.isSourceTypeAvailable(.photoLibrary) && sender.view == profilePicImageView) ||
+            (UIImagePickerController.isSourceTypeAvailable(.camera) && sender.view == cameraPicImageView) {
+
+            imagePicker.delegate = self
+            imagePicker.sourceType = sender.view == cameraPicImageView ? .camera : .photoLibrary
+            imagePicker.allowsEditing = false
+
+            present(imagePicker, animated: true, completion: nil)
+        }
     }
 
 }

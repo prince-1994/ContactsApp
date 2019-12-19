@@ -31,6 +31,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="JgT-Zc-i7X">
+                                <rect key="frame" x="188.5" y="456.5" width="37" height="37"/>
+                            </activityIndicatorView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="Z3p-nu-4QF">
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -128,16 +131,13 @@
                                     <constraint firstAttribute="width" constant="20" id="t6l-9D-ePd"/>
                                 </constraints>
                             </stackView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" id="5sT-pE-eaJ">
-                                <rect key="frame" x="0.0" y="426" width="414" height="44"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="Z3p-nu-4QF" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="83J-Pe-Gkr"/>
+                            <constraint firstItem="JgT-Zc-i7X" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="Ica-2Y-Fmm"/>
+                            <constraint firstItem="JgT-Zc-i7X" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="Jas-c5-D5O"/>
                             <constraint firstItem="L88-zd-2B2" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="M7o-m3-0s3"/>
-                            <constraint firstItem="5sT-pE-eaJ" firstAttribute="centerX" secondItem="Z3p-nu-4QF" secondAttribute="centerX" id="SQo-i9-ZiY"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Z3p-nu-4QF" secondAttribute="bottom" id="Sck-fI-bKo"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Z3p-nu-4QF" secondAttribute="trailing" id="gRs-7p-LVJ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="L88-zd-2B2" secondAttribute="trailing" constant="3" id="gia-oU-B05"/>
@@ -147,7 +147,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="Z2H-db-8uj"/>
                     <connections>
-                        <outlet property="activityIndicator" destination="5sT-pE-eaJ" id="IMr-Ui-lOw"/>
+                        <outlet property="activityIndicator" destination="JgT-Zc-i7X" id="DAw-zy-m9L"/>
                         <outlet property="alphabetPageControl" destination="L88-zd-2B2" id="fX8-oV-BVp"/>
                         <outlet property="tableView" destination="Z3p-nu-4QF" id="9Tj-b5-DJf"/>
                     </connections>
@@ -285,10 +285,10 @@
                                         </constraints>
                                     </imageView>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="camera_button" translatesAutoresizingMaskIntoConstraints="NO" id="0An-hh-5XA">
-                                        <rect key="frame" x="252" y="170" width="30" height="30"/>
+                                        <rect key="frame" x="232" y="150" width="50" height="50"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="gw4-EN-mT9"/>
-                                            <constraint firstAttribute="width" constant="30" id="inS-u7-630"/>
+                                            <constraint firstAttribute="height" constant="50" id="gw4-EN-mT9"/>
+                                            <constraint firstAttribute="width" constant="50" id="inS-u7-630"/>
                                         </constraints>
                                     </imageView>
                                 </subviews>
@@ -340,6 +340,7 @@
                         <viewLayoutGuide key="safeArea" id="dW7-Vr-1NB"/>
                     </view>
                     <connections>
+                        <outlet property="cameraPicImageView" destination="0An-hh-5XA" id="jaj-tI-dVW"/>
                         <outlet property="emailTextField" destination="TZE-mi-akO" id="sIJ-Ox-S5E"/>
                         <outlet property="firstNameTextField" destination="E11-i7-m1a" id="ABu-7x-eeR"/>
                         <outlet property="lastNameTextField" destination="iPN-zj-Ytz" id="JhF-0j-VDO"/>

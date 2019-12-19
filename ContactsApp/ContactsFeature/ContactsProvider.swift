@@ -34,7 +34,7 @@ class ContactsProvider {
     }
     
     func getContact(for id : Int, onCompletion : ((Result<Contact,AppError>) -> Void)?) {
-        networkAPIHandler.getContact(for: id) { [weak self] (result) in
+        networkAPIHandler.getContact(for: id) { (result) in
             onCompletion?(result)
         }
     }
