@@ -14,7 +14,11 @@ struct ContactAppNetworkError : Error, Codable {
 }
 
 class ContactsAppNetworkAPIHandler {
-    private var session = URLSession.shared
+    private var session : URLSession
+    
+    init(urlsession : URLSession) {
+        self.session = urlsession
+    }
     
     func makeAPICall<T : Codable>(with request : URLRequest, onCompletion: @escaping ((Result<T,AppError>) -> Void), urlSession : URLSession? = nil) {
         let session = urlSession ?? self.session
@@ -62,7 +66,6 @@ class ContactsAppNetworkAPIHandler {
                 let model = try JSONDecoder().decode(T.self, from: data)
                 return .success(model)
             } catch {
-                print((try? JSONSerialization.jsonObject(with: data, options: .mutableLeaves)) as? Dictionary<AnyHashable, Any> as Any)
                 return .failure(.parsingError(message: "Not able to parse data"))
             }
         } else if let response = response {

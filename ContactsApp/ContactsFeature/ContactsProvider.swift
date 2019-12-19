@@ -9,13 +9,12 @@
 import Foundation
 
 class ContactsProvider {
-    
-    static let shared = ContactsProvider()
-    
     private var contacts = [Contact]()
-    let networkAPIHandler = ContactNetworkAPIHandler()
+    let networkAPIHandler : ContactNetworkAPIHandler
     
-    init() {
+    init(apiHandler : ContactNetworkAPIHandler) {
+        
+        self.networkAPIHandler = apiHandler
         networkAPIHandler.getAllContacts {[weak self] (result) in
             switch result {
             case .success(let allContacts):

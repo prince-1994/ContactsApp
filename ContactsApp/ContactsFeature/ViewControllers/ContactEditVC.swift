@@ -20,7 +20,7 @@ class ContactEditVC: UIViewController, UITextFieldDelegate , UIImagePickerContro
     @IBOutlet weak var emailTextField: ContactInfoTextField!
     
     private var contact : Contact!
-    private var contactsProvider = ContactsProvider.shared
+    private var contactsProvider : ContactsProvider!
     private var imagePicker = UIImagePickerController()
     
     override func viewDidLoad() {
@@ -151,8 +151,9 @@ class ContactEditVC: UIViewController, UITextFieldDelegate , UIImagePickerContro
         }
     }
     
-    func set(contact : Contact) {
+    func setDependencies(_ contact : Contact, _ contactsProvider : ContactsProvider) {
         self.contact = contact
+        self.contactsProvider = contactsProvider
     }
     
     func setValuesForAllTextFields(contact : Contact) {

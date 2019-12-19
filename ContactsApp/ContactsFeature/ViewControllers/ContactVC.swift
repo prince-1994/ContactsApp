@@ -16,7 +16,7 @@ class ContactVC: ContactAppBaseViewController, UITableViewDelegate, UITableViewD
    
     var chars = Array("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
     
-    var contactsProvider = ContactsProvider.shared
+    var contactsProvider = ContactsProvider(apiHandler: ContactNetworkAPIHandler(urlsession: URLSession.shared))
     var contactModels = [[Contact]]()
     
     override func viewDidLoad() {
@@ -96,7 +96,7 @@ class ContactVC: ContactAppBaseViewController, UITableViewDelegate, UITableViewD
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyBoard.instantiateViewController(identifier: "ContactDetailsVC") as! ContactDetailsVC
-        vc.set(contact: contactModels[indexPath.section][indexPath.row])
+        vc.setDependencies(contactModels[indexPath.section][indexPath.row], contactsProvider)
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -182,7 +182,7 @@ class ContactVC: ContactAppBaseViewController, UITableViewDelegate, UITableViewD
     @objc func openContactEditView() {
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyBoard.instantiateViewController(identifier: "ContactEditVC") as! ContactEditVC
-        vc.set(contact: Contact(id: nil, first_name: "", last_name: "", phone_number: nil, email: nil, profile_pic: nil, favorite: false, url: ""))
+        vc.setDependencies(Contact(id: nil, first_name: "", last_name: "", phone_number: nil, email: nil, profile_pic: nil, favorite: false, url: ""), contactsProvider)
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

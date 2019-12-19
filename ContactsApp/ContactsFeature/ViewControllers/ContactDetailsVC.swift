@@ -23,7 +23,9 @@ class ContactDetailsVC: UIViewController {
     @IBOutlet weak var mobileTextView: ContactInfoTextField!
     
     private var contact : Contact!
-    private var contactsProvider = ContactsProvider.shared
+    private var contactsProvider : ContactsProvider!
+    private var communicationHandler = CommunicationHandler()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -59,21 +61,21 @@ class ContactDetailsVC: UIViewController {
         messageCTAButton.action = { [weak self] in
             if let phoneNumer = self?.contact.phone_number {
                 do {
-                    try CommunicationHandler.shared.writeTextMessage(to: phoneNumer)
+                    try self?.communicationHandler.writeTextMessage(to: phoneNumer)
                 } catch {}
             }
         }
         callCTAButton.action = { [weak self] in
             if let phoneNumer = self?.contact.phone_number {
                 do {
-                    try CommunicationHandler.shared.makeAPhoneCall(to: phoneNumer)
+                    try self?.communicationHandler.makeAPhoneCall(to: phoneNumer)
                 } catch {}
             }
         }
         emailCTAButton.action = { [weak self] in
             if let phoneNumer = self?.contact.phone_number {
                 do {
-                    try CommunicationHandler.shared.writeAnEmail(to: phoneNumer)
+                    try self?.communicationHandler.writeAnEmail(to: phoneNumer)
                 } catch {}
             }
         }
@@ -104,8 +106,9 @@ class ContactDetailsVC: UIViewController {
         }
     }
     
-    func set(contact : Contact) {
+    func setDependencies(_ contact : Contact, _ contactsProvider : ContactsProvider) {
         self.contact = contact
+        self.contactsProvider = contactsProvider
         guard let id = contact.id else { return }
         contactsProvider.getContact(for: id) {[weak self] (result) in
             switch result {
@@ -119,6 +122,7 @@ class ContactDetailsVC: UIViewController {
             }
         }
     }
+    
     
     func setValuesForAllTextViews(contact : Contact) {
         emailTextView.setValues(name: EDIT_TEXTFIELD_EMAIL, value: contact.email ?? "", isEditable: false)
@@ -142,7 +146,7 @@ class ContactDetailsVC: UIViewController {
     @objc func editButtonTapped() {
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyBoard.instantiateViewController(identifier: "ContactEditVC") as! ContactEditVC
-        vc.set(contact: contact)
+        vc.setDependencies(contact, contactsProvider)
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

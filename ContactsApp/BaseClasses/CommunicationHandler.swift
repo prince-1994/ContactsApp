@@ -10,8 +10,7 @@ import Foundation
 import UIKit
 
 class CommunicationHandler {
-    static let shared = CommunicationHandler()
-    private init() { }
+    init() { }
     
     func makeAPhoneCall(to number : String) throws {
         guard Utility.isValidPhoneNumber(string : number) else { return }
