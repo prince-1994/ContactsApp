@@ -8,6 +8,6 @@
 
 import XCTest
 
-class ContactNetworkAPIHandlerTests {
+class ContactNetworkAPIHandlerTests : XCTestCase {
     
 }

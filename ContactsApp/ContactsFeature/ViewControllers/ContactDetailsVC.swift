@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ContactDetailsVC: UIViewController {
+class ContactDetailsVC: ContactAppBaseViewController {
     
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var profilePicImageView: UIImageView!

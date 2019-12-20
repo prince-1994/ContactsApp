@@ -8,6 +8,6 @@
 
 import XCTest
 
-class ContactsProviderTests {
+class ContactsProviderTests : XCTestCase {
     
 }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ContactEditVC: UIViewController, UITextFieldDelegate , UIImagePickerControllerDelegate, UINavigationControllerDelegate  {
+class ContactEditVC: ContactAppBaseViewController, UITextFieldDelegate , UIImagePickerControllerDelegate, UINavigationControllerDelegate  {
     
     @IBOutlet weak var cameraPicImageView: UIImageView!
     @IBOutlet weak var profilePicImageView: UIImageView!
