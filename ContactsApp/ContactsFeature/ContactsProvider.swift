@@ -10,9 +10,9 @@ import Foundation
 
 class ContactsProvider {
     private var contacts = [Contact]()
-    let networkAPIHandler : ContactNetworkAPIHandler
+    let networkAPIHandler : ContactNetworkAPIHandlerProtocol
     
-    init(apiHandler : ContactNetworkAPIHandler) {
+    init(apiHandler : ContactNetworkAPIHandlerProtocol) {
         
         self.networkAPIHandler = apiHandler
         networkAPIHandler.getAllContacts {[weak self] (result) in

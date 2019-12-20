@@ -8,11 +8,11 @@
 
 import Foundation
 
-class ContactNetworkAPIHandler : ContactsAppNetworkAPIHandler {
+class ContactNetworkAPIHandler : ContactsAppNetworkAPIHandler, ContactNetworkAPIHandlerProtocol {
     
-    let contactsEndpoint = "/contacts"
-    let dotJson = ".json"
-    let baseURL = "https://gojek-contacts-app.herokuapp.com"
+    private let contactsEndpoint = "/contacts"
+    private let dotJson = ".json"
+    private let baseURL = "https://gojek-contacts-app.herokuapp.com"
     
     
     func getAllContacts(onCompletion : @escaping ((Result<[Contact],AppError>) -> Void)) {

@@ -13,21 +13,21 @@ class CommunicationHandler {
     init() { }
     
     func makeAPhoneCall(to number : String) throws {
-        guard Utility.isValidPhoneNumber(string : number) else { return }
+//        guard Utility.isValidPhoneNumber(string : number) else { return }
         if let url = URL(string: "tel://\(number)") {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
     
     func writeTextMessage(to number : String) throws {
-        guard Utility.isValidPhoneNumber(string : number) else { return }
+//        guard Utility.isValidPhoneNumber(string : number) else { return }
         if let url = URL(string: "sms:\(number)") {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
     
     func writeAnEmail(to email : String) throws {
-        guard Utility.isValidEmail(string: email) else { return }
+//        guard Utility.isValidEmail(string: email) else { return }
         if let url = URL(string: "mailto:\(email)") {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }

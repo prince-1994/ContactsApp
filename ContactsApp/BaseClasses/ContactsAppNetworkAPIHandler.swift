@@ -14,9 +14,9 @@ struct ContactAppNetworkError : Error, Codable {
 }
 
 class ContactsAppNetworkAPIHandler {
-    private var session : URLSession
+    private var session : URLSessionProtocol
     
-    init(urlsession : URLSession) {
+    init(urlsession : URLSessionProtocol) {
         self.session = urlsession
     }
     
@@ -28,11 +28,6 @@ class ContactsAppNetworkAPIHandler {
         }.resume()
     }
     
-    func makeAPICall(with request : URLRequest, urlSession : URLSession? = nil) {
-        let session = urlSession ?? self.session
-        session.dataTask(with: request).resume()
-    }
-    
     func makeAPICall<T : Codable>(with url : URL, onCompletion: @escaping ((Result<T,AppError>) -> Void), urlSession : URLSession? = nil) {
         let session = urlSession ?? self.session
         session.dataTask(with: url) { [weak self]  (data, response, error) in
@@ -40,12 +35,6 @@ class ContactsAppNetworkAPIHandler {
             onCompletion(result)
         }.resume()
     }
-    
-    func makeAPICall(with url : URL, urlSession : URLSession? = nil) {
-        let session = urlSession ?? self.session
-        session.dataTask(with: url).resume()
-    }
-    
     
     func parseResponse<T:Codable>(data : Data?, response :  URLResponse?, error : Error?) -> Result<T,AppError> {
         if let error = error {
@@ -78,6 +67,4 @@ class ContactsAppNetworkAPIHandler {
             return .failure(.unknown(message: "no response, no data, no error recieved"))
         }
     }
-    
-    
 }
