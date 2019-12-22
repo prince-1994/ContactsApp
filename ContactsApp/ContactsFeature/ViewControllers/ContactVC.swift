@@ -125,7 +125,6 @@ class ContactVC: ContactAppBaseViewController, UITableViewDelegate, UITableViewD
     // MARK: helper methods
     
     @objc func updateContacts() {
-        print("abcde")
         DispatchQueue.global(qos: .background).async { [weak self] in
             guard let allContacts = self?.contactsProvider.getAllContacts() else {
                 return }
