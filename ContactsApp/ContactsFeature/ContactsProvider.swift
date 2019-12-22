@@ -22,7 +22,6 @@ class ContactsProvider {
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: CONTACTS_LOADED_SUCCESSFULLY), object: self)
             case .failure(_) :
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: CONTACTS_LOADING_FAILED), object: self)
-                break
             }
         }
         

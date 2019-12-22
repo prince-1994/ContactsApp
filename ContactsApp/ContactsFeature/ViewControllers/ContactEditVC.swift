@@ -60,9 +60,25 @@ class ContactEditVC: ContactAppBaseViewController, UITextFieldDelegate , UIImage
     
     func configureNavigationBar() {
         self.title = ""
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: DONE_BAR_BUTTON_TEXT, style: .plain, target: self, action: #selector(doneButtonTapped))
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: CANCLE_BAR_BUTTON_TEXT, style: .plain, target: self, action: #selector(cancleButtonTapped))
+        configureDoneBarButton()
+        configureCancleBarButton()
         self.navigationController?.navigationBar.backgroundColor = AppTheme.BASE_COLOR_2
+    }
+    
+    func configureDoneBarButton() {
+        let doneButton = UIButton(type: .custom)
+        doneButton.setTitle(DONE_BAR_BUTTON_TEXT, for: .normal)
+        doneButton.setTitleColor(AppTheme.BASE_COLOR_1, for: .normal)
+        doneButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: doneButton)
+    }
+    
+    func configureCancleBarButton() {
+        let cancleButton = UIButton(type: .custom)
+        cancleButton.setTitle(CANCLE_BAR_BUTTON_TEXT, for: .normal)
+        cancleButton.setTitleColor(AppTheme.BASE_COLOR_1, for: .normal)
+        cancleButton.addTarget(self, action: #selector(cancleButtonTapped), for: .touchUpInside)
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: cancleButton)
     }
     
     func configureAllTextField() {
@@ -96,9 +112,9 @@ class ContactEditVC: ContactAppBaseViewController, UITextFieldDelegate , UIImage
     @objc func doneButtonTapped() {
         do {
             try validateAllTextFields()
-        } catch {
+        }  catch {
             print(error.localizedDescription)
-            return 
+            return
         }
         
         updateContactModel()
@@ -109,16 +125,19 @@ class ContactEditVC: ContactAppBaseViewController, UITextFieldDelegate , UIImage
                     self?.navigationController?.popViewController(animated: true)
                 }
             case .failure(let error):
+                var body : String? = nil
                 switch error {
                 case .miscellaneous(let message):
-                    print(message)
-                case .networkError(let code, let message):
-                    print(code, message)
+                    body = message
+                case .networkError(_, let message):
+                    body = message
                 case .parsingError(let message):
-                    print(message)
+                    body = message
                 case .unknown(let message):
-                    print(message)
+                    body = message
                 }
+                
+                self?.showToast(image: UIImage(systemName: SYSTEM_IMAGE_EXCLAIMATION_MARK_CIRCLE), title: TOAST_TEXT_CONTACT_SAVING_FAILED, body: SOMETHING_WENT_WRONG)
             }
         }
         if let id = contact.id {

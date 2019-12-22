@@ -34,6 +34,8 @@ class ContactVC: ContactAppBaseViewController, UITableViewDelegate, UITableViewD
     
     func configureForNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(updateContacts), name: NSNotification.Name(rawValue: CONTACTS_LOADED_SUCCESSFULLY), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(showContactsLoadingFailed), name: NSNotification.Name(rawValue: CONTACTS_LOADING_FAILED), object: nil)
 
         NotificationCenter.default.addObserver(self, selector: #selector(updateContacts), name: NSNotification.Name(rawValue: NEW_CONTACT_CREATED), object: nil)
 
@@ -49,7 +51,6 @@ class ContactVC: ContactAppBaseViewController, UITableViewDelegate, UITableViewD
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = UITableView.automaticDimension
-//        tableView.sectionHeaderHeight = 40 // UITableView.automaticDimension
         tableView.sectionFooterHeight = CGFloat.leastNormalMagnitude
 
     }
@@ -61,8 +62,23 @@ class ContactVC: ContactAppBaseViewController, UITableViewDelegate, UITableViewD
     
     func configureNavigatioBar() {
         self.title = CONTACT_SCREEN_TITLE
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "+", style: .plain, target: self, action: #selector(openContactEditView))
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Groups", style: .plain, target: self, action: nil)
+        configureContactAddBarButton()
+        configureGroupsBarButton()
+    }
+    
+    func configureContactAddBarButton() {
+        let plusButton = UIButton(type: .custom)
+        plusButton.setTitle("+", for: .normal)
+        plusButton.setTitleColor(AppTheme.BASE_COLOR_1, for: .normal)
+        plusButton.addTarget(self, action: #selector(openContactEditView), for: .touchUpInside)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: plusButton)
+    }
+    
+    func configureGroupsBarButton() {
+        let groupsButton = UIButton(type: .custom)
+        groupsButton.setTitle("Groups", for: .normal)
+        groupsButton.setTitleColor(AppTheme.BASE_COLOR_1, for: .normal)
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: groupsButton)
     }
     
     // MARK: tableview datasource methods
@@ -100,8 +116,7 @@ class ContactVC: ContactAppBaseViewController, UITableViewDelegate, UITableViewD
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if tableView == scrollView {
             updateAlphabetPageControl()
         }
@@ -110,8 +125,10 @@ class ContactVC: ContactAppBaseViewController, UITableViewDelegate, UITableViewD
     // MARK: helper methods
     
     @objc func updateContacts() {
+        print("abcde")
         DispatchQueue.global(qos: .background).async { [weak self] in
-            guard let allContacts = self?.contactsProvider.getAllContacts() else { return }
+            guard let allContacts = self?.contactsProvider.getAllContacts() else {
+                return }
             var dict = [Character : [Contact]]()
             for contact in allContacts {
                 if let firstChar = contact.first_name.uppercased().first {
@@ -196,6 +213,10 @@ class ContactVC: ContactAppBaseViewController, UITableViewDelegate, UITableViewD
         tableView.reloadData()
         activityIndicator.stopAnimating()
         activityIndicator.isHidden = true
+    }
+    
+    @objc func showContactsLoadingFailed() {
+        self.showToast(image: UIImage(systemName: SYSTEM_IMAGE_EXCLAIMATION_MARK_CIRCLE), title: TOAST_TEXT_CONTACTS_NOT_LOADED, body: SOMETHING_WENT_WRONG)
     }
     
 }

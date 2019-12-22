@@ -12,12 +12,12 @@ class AlphabetPageControl: UIStackView {
     var selectedIndex = -1 {
         willSet {
             if let label = getLabel(index: selectedIndex) {
-                label.textColor = .black
+                label.textColor = AppTheme.BASE_COLOR_3
             }
         }
         didSet {
             if let label = getLabel(index: selectedIndex) {
-                label.textColor = .green
+                label.textColor = AppTheme.BASE_COLOR_1
             }
         }
     }
@@ -27,6 +27,7 @@ class AlphabetPageControl: UIStackView {
             let label = UILabel(frame: CGRect(x: 0, y: 0, width: 10, height: 20))
             label.text = String(char)
             label.font = UIFont.systemFont(ofSize: 13)
+            label.textColor = AppTheme.BASE_COLOR_3
             self.addArrangedSubview(label)
         }
     }

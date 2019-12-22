@@ -50,7 +50,16 @@ class ContactDetailsVC: ContactAppBaseViewController {
     
     func configureNavigationBar() {
         self.title = ""
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: EDIT_BAR_BUTTON_TEXT, style: .plain, target: self, action: #selector(editButtonTapped))
+        self.navigationController?.navigationBar.tintColor = AppTheme.BASE_COLOR_1
+        configureContactAddBarButton()
+    }
+    
+    func configureContactAddBarButton() {
+        let editButton = UIButton(type: .custom)
+        editButton.setTitle(EDIT_BAR_BUTTON_TEXT, for: .normal)
+        editButton.setTitleColor(AppTheme.BASE_COLOR_1, for: .normal)
+        editButton.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: editButton)
     }
     
     func configureTopView() {
@@ -96,6 +105,8 @@ class ContactDetailsVC: ContactAppBaseViewController {
         }
     }
     
+    
+    
     // MARK: Helper Methods
     
     @objc func updateContactModel(notification : Notification) {
@@ -117,8 +128,8 @@ class ContactDetailsVC: ContactAppBaseViewController {
                 DispatchQueue.main.async {
                     self?.updateAllDynamicUI()
                 }
-            case .failure(let error):
-                print(error)
+            case .failure(_):
+                self?.showToast(image: UIImage(systemName: SYSTEM_IMAGE_EXCLAIMATION_MARK_CIRCLE), title: TOAST_TEXT_CONTACT_NOT_LOADED_FULLY, body: SOMETHING_WENT_WRONG)
             }
         }
     }

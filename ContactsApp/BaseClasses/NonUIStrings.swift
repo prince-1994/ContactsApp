@@ -21,3 +21,5 @@ let FAVORITE_BUTTON_PHOTO = "favourite_button"
 let FAVORITE_SELECTED_BUTTON_PHOTO = "favourite_button_selected"
 let HOME_FAVORITE_BUTTON_PHOTO = "home_favourite"
 let MESSAGE_BUTTON_PHOTO = "message_button"
+
+let SYSTEM_IMAGE_EXCLAIMATION_MARK_CIRCLE = "exclamationmark.circle"
